@@ -20,14 +20,20 @@ public class PostController {
 
     // Create Blog Post
     @PostMapping
-    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO){
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
         return new ResponseEntity<>(postService.createPost(postDTO), HttpStatus.CREATED);
     }
 
 
     // get all rest-api
     @GetMapping()
-    public List<PostDTO> getAllPosts(){
+    public List<PostDTO> getAllPosts() {
         return postService.getAllPost();
+    }
+
+    // get post by id
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDTO> getPostById(@PathVariable(name = "id") long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 }
