@@ -3,6 +3,7 @@ package com.ahmetsenocak.blogapp.service.impl;
 import com.ahmetsenocak.blogapp.entity.Post;
 import com.ahmetsenocak.blogapp.exception.ResourceNotFoundException;
 import com.ahmetsenocak.blogapp.payload.PostDTO;
+import com.ahmetsenocak.blogapp.payload.PostResponse;
 import com.ahmetsenocak.blogapp.repository.PostRepository;
 import com.ahmetsenocak.blogapp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,25 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPost(int pageNo, int pageSize) {
+    public PostResponse getAllPost(int pageNo, int pageSize) {
         // create pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 
         Page<Post> posts = postRepository.findAll(pageable);
         // get content of page object
         List<Post> listOfPost = posts.getContent();
-        return listOfPost.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        List<PostDTO> content = listOfPost.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(content);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
+
     }
 
     @Override

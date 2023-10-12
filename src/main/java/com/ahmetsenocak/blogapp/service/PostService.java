@@ -2,6 +2,7 @@ package com.ahmetsenocak.blogapp.service;
 
 import com.ahmetsenocak.blogapp.entity.Post;
 import com.ahmetsenocak.blogapp.payload.PostDTO;
+import com.ahmetsenocak.blogapp.payload.PostResponse;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface PostService {
     PostDTO createPost(PostDTO postDTO);
 
-    List<PostDTO> getAllPost(int pageNo, int pageSize);
+    PostResponse getAllPost(int pageNo, int pageSize);
 
     PostDTO getPostById(Long id);
 
