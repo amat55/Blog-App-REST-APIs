@@ -14,7 +14,7 @@ public class PostController {
 
     private PostService postService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService)  {
         this.postService = postService;
     }
 
@@ -27,8 +27,11 @@ public class PostController {
 
     // get all rest-api
     @GetMapping()
-    public List<PostDTO> getAllPosts() {
-        return postService.getAllPost();
+    public List<PostDTO> getAllPosts(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "18", required = false) int pageSize
+    ) {
+        return postService.getAllPost(pageNo,pageSize);
     }
 
     // get post by id
