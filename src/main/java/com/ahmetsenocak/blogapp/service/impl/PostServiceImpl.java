@@ -38,9 +38,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPost(int pageNo, int pageSize) {
+    public PostResponse getAllPost(int pageNo, int pageSize, String sortBy) {
         // create pageable instance
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
         Page<Post> posts = postRepository.findAll(pageable);
         // get content of page object

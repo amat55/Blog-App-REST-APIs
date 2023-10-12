@@ -15,7 +15,7 @@ public class PostController {
 
     private PostService postService;
 
-    public PostController(PostService postService)  {
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
@@ -30,9 +30,11 @@ public class PostController {
     @GetMapping()
     public PostResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "18", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "18", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+
     ) {
-        return postService.getAllPost(pageNo,pageSize);
+        return postService.getAllPost(pageNo, pageSize, sortBy);
     }
 
     // get post by id
