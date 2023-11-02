@@ -100,7 +100,7 @@ public class PostServiceImpl implements PostService {
     // convert DTO to Entity
     private Post mapToEntity(PostDTO postDTO) {
         Post post = mapper.map(postDTO, Post.class);
-        
+
         return post;
     }
 }
