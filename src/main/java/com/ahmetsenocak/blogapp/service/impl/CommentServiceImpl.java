@@ -108,7 +108,7 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDTO mapToDTO(Comment comment) {
         CommentDTO commentDTO = mapper.map(comment, CommentDTO.class);
-        
+
         return commentDTO;
     }
 
