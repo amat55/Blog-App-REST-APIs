@@ -1,10 +1,7 @@
 package com.ahmetsenocak.blogapp.service;
 
-import com.ahmetsenocak.blogapp.entity.Post;
 import com.ahmetsenocak.blogapp.payload.PostDTO;
 import com.ahmetsenocak.blogapp.payload.PostResponse;
-
-import java.util.List;
 
 
 public interface PostService {
