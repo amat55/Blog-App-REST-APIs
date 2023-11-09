@@ -1,5 +1,6 @@
 package com.ahmetsenocak.blogapp.controller;
 
+import com.ahmetsenocak.blogapp.payload.JWTAuthResponse;
 import com.ahmetsenocak.blogapp.payload.LoginDTO;
 import com.ahmetsenocak.blogapp.payload.RegisterDTO;
 import com.ahmetsenocak.blogapp.service.AuthService;
@@ -22,15 +23,19 @@ public class AuthController {
 
     // Build Login Rest-API
     @PostMapping(value = {"/login", "/signing"}) // User can use both url login or signing
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        String response = authService.login(loginDTO);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDTO loginDTO) {
+        String token = authService.login(loginDTO);
+
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
     // Build register Rest-API
     @PostMapping(value = {"/register", "/signup"}) // User can use both url register or signup
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
         String response = authService.register(registerDTO);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

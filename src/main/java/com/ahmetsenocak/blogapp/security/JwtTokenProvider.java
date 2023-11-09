@@ -45,7 +45,7 @@ public class JwtTokenProvider {
 
     // get username from Jwt token
     public String getUsername(String token){
-        Claims claims = Jwts.parserBuilder()
+        Claims claims = Jwts.parser()
                 .setSigningKey(key())
                 .build()
                 .parseClaimsJws(token)
@@ -57,7 +57,7 @@ public class JwtTokenProvider {
     // validate Jwt token
     public boolean validateToken(String token){
         try{
-            Jwts.parserBuilder()
+            Jwts.parser()
                     .setSigningKey(key())
                     .build()
                     .parse(token);
