@@ -1,9 +1,11 @@
 package com.ahmetsenocak.blogapp.service.impl;
 
+import com.ahmetsenocak.blogapp.entity.Category;
 import com.ahmetsenocak.blogapp.entity.Post;
 import com.ahmetsenocak.blogapp.exception.ResourceNotFoundException;
 import com.ahmetsenocak.blogapp.payload.PostDTO;
 import com.ahmetsenocak.blogapp.payload.PostResponse;
+import com.ahmetsenocak.blogapp.repository.CategoryRepository;
 import com.ahmetsenocak.blogapp.repository.PostRepository;
 import com.ahmetsenocak.blogapp.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -22,17 +24,23 @@ import java.util.stream.Collectors;
 public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
     private ModelMapper mapper;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper, CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.mapper = mapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public PostDTO createPost(PostDTO postDTO) {
+        Category category = categoryRepository.findById(postDTO.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", postDTO.getCategoryId()));
+
         // Converting DTO to entity
         Post post = mapToEntity(postDTO);
+        post.setCategory(category);
         Post newPost = postRepository.save(post);
 
         // Convert entity to DTO
