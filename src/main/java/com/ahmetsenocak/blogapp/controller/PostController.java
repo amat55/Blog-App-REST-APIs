@@ -4,6 +4,7 @@ import com.ahmetsenocak.blogapp.payload.PostDTO;
 import com.ahmetsenocak.blogapp.payload.PostResponse;
 import com.ahmetsenocak.blogapp.service.PostService;
 import com.ahmetsenocak.blogapp.utils.AppConstants;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class PostController {
         this.postService = postService;
     }
 
+    @SecurityRequirement(
+            name = "Bear Authentication"
+    )
     // Create Blog Post
     @PreAuthorize("hasRole('ADMIN')")   // only admin access to creatPost
     @PostMapping
@@ -49,6 +53,9 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
+    @SecurityRequirement(
+            name = "Bear Authentication"
+    )
     // update post by id
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
@@ -59,6 +66,9 @@ public class PostController {
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 
+    @SecurityRequirement(
+            name = "Bear Authentication"
+    )
     // delete post by id
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
